@@ -1,0 +1,18 @@
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+from sklearn.model_selection import cross_val_score
+def print_scores(model, X_train, Y_train, cv, scoring):
+    print('Cross validation scores:', cross_val_score(model, X_train, Y_train, cv=cv, scoring=scoring, n_jobs=-1) )
+    print( 'Mean of scores:', np.mean( cross_val_score(model, X_train, Y_train, cv=cv, scoring=scoring, n_jobs=-1) ) )
+    print( 'Variance:', np.std( cross_val_score(model, X_train, Y_train, cv=cv, scoring=scoring, n_jobs=-1) ) )
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler(feature_range=(1, 9))
+x_train_scaled = scaler.fit_transform(x_train)
+x_train = pd.DataFrame(x_train_scaled)
+x_test_scaled = scaler.fit_transform(x_test)
+x_test = pd.DataFrame(x_test_scaled)
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.3,random_state=42, stratify=y)
